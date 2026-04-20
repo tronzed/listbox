@@ -1,0 +1,90 @@
+ .list_cover ul {
+   padding: 0;
+   list-style-type: none;
+ }
+
+ .list_cover ul li {
+   border: 1px solid #c3c3c3;
+   padding: 5px 15px;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   gap: 8px;
+   border-radius: 5px;
+ }
+
+ .list_cover ul li .qty_item {
+   width: 50px;
+ }
+
+ .list_cover ul li button {
+   border: 0;
+   padding: 3px 12px;
+   border-radius: 4px;
+   display: none;
+ }
+
+ .list_cover ul .item_tool_box {
+   display: flex;
+   gap: 20px;
+ }
+
+ .list_cover ul .active_item {
+   background-color: #000;
+   color: #fff;
+ }
+
+ .list_cover ul .active_item {
+   background-color: #bf8f00;
+   color: #fff;
+ }
+
+ .list_cover {
+   padding-top: 15px;
+   padding-bottom: 68px;
+   min-height: 100vh;
+ }
+
+ .bottom_submit_box {
+   position: fixed;
+   bottom: 0;
+   left: 0;
+   width: 100%;
+ }
+
+ .bottom_submit_box button {
+   display: block;
+   width: 100%;
+   border: 0;
+   padding: 12px 20px;
+   box-shadow: 0 0 25px -7px #000;
+   background-color: #414141;
+   color: #fff;
+   font-size: 20px;
+   font-weight: 600;
+ }
+
+ .list_cover ul li .item_name {
+   font-weight: 600;
+ }
+
+ .top_toolbar_cover {
+   display: flex;
+   justify-content: space-between;
+   align-content: center;
+   margin-bottom: 20px;
+ }
+
+ .add_more_item .btn.btn-light {
+   font-size: 14px;
+ }
+
+ .hide_me {
+   display: none;
+ }
+
+ .list_cover .logo_box h1 {
+   text-align: center;
+   font-size: 21px;
+   font-weight: 800;
+ }
