@@ -1,10 +1,25 @@
-
+import { useState } from "react";
 
 export const Home = () => {
 
-    return (
+    const listData = [
+        { name: 'Food Item 01' },
+        { name: 'Food Item 02' },
+        { name: 'Food Item 03' },
+        { name: 'Food Item 04' },
+        { name: 'Food Item 05' },
+        { name: 'Food Item 06' },
+        { name: 'Food Item 07' },
+        { name: 'Food Item 08' },
+        { name: 'Food Item 09' }
+    ]
 
+    const [addedList, setAddedList] = useState([])
+
+    return (
         <>
+
+            {console.log(addedList)}
 
             <>
                 <div className="container list_cover">
@@ -36,138 +51,24 @@ export const Home = () => {
                                 </div>
                             </div>
                             <ul className="item_name_box">
-                                <li>
-                                    <span className="item_name">Food Item 01</span>
-                                    <div className="item_tool_box">
-                                        <input
-                                            className="qty_item"
-                                            type="number"
-                                            defaultValue={1}
-                                            step="0.5"
-                                        />
-                                        <button>Add</button>
-                                    </div>
-                                </li>
-                                <li className="active_item">
-                                    <span className="item_name">Food Item 02</span>
-                                    <div className="item_tool_box">
-                                        <input
-                                            className="qty_item"
-                                            type="number"
-                                            defaultValue={1}
-                                            step="0.5"
-                                        />
-                                        <button>Add</button>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span className="item_name">Food Item 03</span>
-                                    <div className="item_tool_box">
-                                        <input
-                                            className="qty_item"
-                                            type="number"
-                                            defaultValue={1}
-                                            step="0.5"
-                                        />
-                                        <button>Add</button>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span className="item_name">Food Item 04</span>
-                                    <div className="item_tool_box">
-                                        <input
-                                            className="qty_item"
-                                            type="number"
-                                            defaultValue={1}
-                                            step="0.5"
-                                        />
-                                        <button>Add</button>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span className="item_name">Food Item 05</span>
-                                    <div className="item_tool_box">
-                                        <input
-                                            className="qty_item"
-                                            type="number"
-                                            defaultValue={1}
-                                            step="0.5"
-                                        />
-                                        <button>Add</button>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span className="item_name">Food Item 06</span>
-                                    <div className="item_tool_box">
-                                        <input
-                                            className="qty_item"
-                                            type="number"
-                                            defaultValue={1}
-                                            step="0.5"
-                                        />
-                                        <button>Add</button>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span className="item_name">Food Item 07</span>
-                                    <div className="item_tool_box">
-                                        <input
-                                            className="qty_item"
-                                            type="number"
-                                            defaultValue={1}
-                                            step="0.5"
-                                        />
-                                        <button>Add</button>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span className="item_name">Food Item 08</span>
-                                    <div className="item_tool_box">
-                                        <input
-                                            className="qty_item"
-                                            type="number"
-                                            defaultValue={1}
-                                            step="0.5"
-                                        />
-                                        <button>Add</button>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span className="item_name">Food Item 09</span>
-                                    <div className="item_tool_box">
-                                        <input
-                                            className="qty_item"
-                                            type="number"
-                                            defaultValue={1}
-                                            step="0.5"
-                                        />
-                                        <button>Add</button>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span className="item_name">Food Item 10</span>
-                                    <div className="item_tool_box">
-                                        <input
-                                            className="qty_item"
-                                            type="number"
-                                            defaultValue={1}
-                                            step="0.5"
-                                        />
-                                        <button>Add</button>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span className="item_name">Food Item 11</span>
-                                    <div className="item_tool_box">
-                                        <input
-                                            className="qty_item"
-                                            type="number"
-                                            defaultValue={1}
-                                            step="0.5"
-                                        />
-                                        <button>Add</button>
-                                    </div>
-                                </li>
+                                {
+                                    listData?.map((item, key) => (
+                                        <>
+                                            <li>
+                                                <span className="item_name">{item?.name}</span>
+                                                <div className="item_tool_box">
+                                                    <input
+                                                        className="qty_item"
+                                                        type="number"
+                                                        defaultValue={1}
+                                                        step="0.5"
+                                                    />
+                                                    <button onClick={() => { setAddedList((prev) => [...prev, item?.name]) }}>Add</button>
+                                                </div>
+                                            </li>
+                                        </>
+                                    ))
+                                }
                             </ul>
                         </div>
                     </div>
@@ -176,10 +77,6 @@ export const Home = () => {
                     <button>Submit</button>
                 </div>
             </>
-
-
         </>
-
     );
-
 }
