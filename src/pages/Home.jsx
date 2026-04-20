@@ -54,7 +54,7 @@ export const Home = () => {
                                 {
                                     listData?.map((item, key) => (
                                         <>
-                                            <li>
+                                            <li className={addedList?.includes(item?.name) ? 'active_item' : ""}>
                                                 <span className="item_name">{item?.name}</span>
                                                 <div className="item_tool_box">
                                                     <input
@@ -63,7 +63,13 @@ export const Home = () => {
                                                         defaultValue={1}
                                                         step="0.5"
                                                     />
-                                                    <button onClick={() => { setAddedList((prev) => [...prev, item?.name]) }}>Add</button>
+                                                    <button
+                                                        onClick={() => {
+                                                            setAddedList((prev) => [...new Set([...prev, item?.name])]);
+                                                        }}
+                                                    >
+                                                        Add
+                                                    </button>
                                                 </div>
                                             </li>
                                         </>
