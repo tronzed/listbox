@@ -1,18 +1,49 @@
-import { useState } from "react";
-
+import { useRef, useState } from "react";
+import { toJpeg } from "html-to-image";
 export const Home = () => {
 
+
+
+    const ref = useRef();
+
+    const download22 = async () => {
+        const dataUrl = await toJpeg(ref.current, { quality: 1 });
+
+        const link = document.createElement("a");
+        link.download = "list.jpg";
+        link.href = dataUrl;
+        link.click();
+    };
+
+    const download = async () => {
+        await new Promise((res) => setTimeout(res, 300)); // wait for render
+
+        const dataUrl = await toJpeg(ref.current, { quality: 1 });
+
+        const link = document.createElement("a");
+        link.download = "list.jpg";
+        link.href = dataUrl;
+        link.click();
+    };
+
+
     const listData = [
-        { name: 'Food Item 01' },
-        { name: 'Food Item 02' },
-        { name: 'Food Item 03' },
-        { name: 'Food Item 04' },
-        { name: 'Food Item 05' },
-        { name: 'Food Item 06' },
-        { name: 'Food Item 07' },
-        { name: 'Food Item 08' },
-        { name: 'Food Item 09' }
-    ]
+        { name: 'Namak (Salt)' },
+        { name: 'Lal Mirch Powder' },
+        { name: 'Haldi Powder' },
+        { name: 'Jeera ' },
+        { name: 'Dhaniya Powder' },
+        { name: 'Garam Masala' },
+        { name: 'Atta' },
+        { name: 'Chawal' },
+        { name: 'Dal ' },
+        { name: 'Sarson Tel ' },
+        { name: 'Sugar ' },
+        { name: 'Tea ' },
+        { name: 'Milk ' },
+        { name: 'Onion ' },
+        { name: 'Potato ' }
+    ];
 
     const [addedList, setAddedList] = useState([])
 
@@ -54,7 +85,7 @@ export const Home = () => {
                                 {
                                     listData?.map((item, key) => (
                                         <>
-                                            <li className={addedList?.includes(item?.name) ? 'active_item' : ""}>
+                                            <li className={addedList?.includes(item?.name) ? 'active_item' : "none"}>
                                                 <span className="item_name">{item?.name}</span>
                                                 <div className="item_tool_box">
                                                     <input
@@ -64,11 +95,20 @@ export const Home = () => {
                                                         step="0.5"
                                                     />
                                                     <button
+                                                        className="add_btn"
                                                         onClick={() => {
                                                             setAddedList((prev) => [...new Set([...prev, item?.name])]);
                                                         }}
                                                     >
                                                         Add
+                                                    </button>
+                                                    <button
+                                                        className="remove_btn"
+                                                        onClick={() => {
+                                                            setAddedList((prev) => prev.filter((val) => val !== item?.name));
+                                                        }}
+                                                    >
+                                                        Remove
                                                     </button>
                                                 </div>
                                             </li>
@@ -80,14 +120,18 @@ export const Home = () => {
                     </div>
                 </div>
 
-                <div className="bottom_fix_footer">
-                    <div className="bottom_view_box">
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">See List</button>
+                {addedList.length ? (
+
+
+                    <div className="bottom_fix_footer">
+                        <div className="bottom_view_box">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">See List</button>
+                        </div>
                     </div>
-                    <div className="bottom_submit_box">
-                        <button>Submit</button>
-                    </div>
-                </div>
+
+
+                ) : ""}
+
 
                 <div
                     className="modal fade"
@@ -109,20 +153,19 @@ export const Home = () => {
                                     aria-label="Close"
                                 />
                             </div>
-                            <div className="modal-body">
-
-                                {
-
-                                    addedList?.map((item, key) => (
-                                        <>
-                                            <p>
-                                                {item}
-                                            </p>
-                                        </>
-                                    ))
-
-                                }
-
+                            <div ref={ref} className="modal-body">
+                                <div className="inner_content">
+                                    {
+                                        addedList?.map((item, key) => (
+                                            <>
+                                                <p>
+                                                    <span>{item}</span>
+                                                    <span>1</span>
+                                                </p>
+                                            </>
+                                        ))
+                                    }
+                                </div>
                             </div>
                             <div className="modal-footer">
                                 <button
@@ -132,8 +175,8 @@ export const Home = () => {
                                 >
                                     Close
                                 </button>
-                                <button type="button" className="btn btn-primary">
-                                    Save changes
+                                <button onClick={download} type="button" className="btn btn-primary">
+                                    Download list
                                 </button>
                             </div>
                         </div>
