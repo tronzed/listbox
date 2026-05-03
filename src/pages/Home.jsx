@@ -1,8 +1,13 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toJpeg } from "html-to-image";
 export const Home = () => {
 
     const ref = useRef();
+
+    const [qtyBox, setQtyBox] = useState({});
+    const [addedList, setAddedList] = useState([])
+    const [leng, setLeng] = useState(false);
+    const [listMap, setListMap] = useState();
 
     const download = async () => {
         await new Promise((res) => setTimeout(res, 300)); // wait for render
@@ -17,7 +22,7 @@ export const Home = () => {
 
 
     const listData = [
-        { name: 'Namak (Salt)', qty: 1 },
+        { name: 'Namak (Salt)' },
         { name: 'Lal Mirch Powder' },
         { name: 'Haldi Powder' },
         { name: 'Jeera ' },
@@ -34,8 +39,32 @@ export const Home = () => {
         { name: 'Potato ' }
     ];
 
-    const [qtyBox, setQtyBox] = useState({});
-    const [addedList, setAddedList] = useState([])
+    const listDatahindi = [
+        { name: 'नमक' },
+        { name: 'लाल मिर्च पाउडर' },
+        { name: 'हल्दी पाउडर' },
+        { name: 'जीरा' },
+        { name: 'धनिया पाउडर' },
+        { name: 'गरम मसाला' },
+        { name: 'आटा' },
+        { name: 'चावल' },
+        { name: 'दाल' },
+        { name: 'सरसों का तेल' },
+        { name: 'चीनी' },
+        { name: 'चाय' },
+        { name: 'दूध' },
+        { name: 'प्याज' },
+        { name: 'आलू' }
+    ];
+
+    const onCheck = () => {
+        leng ? setListMap(listData) : setListMap(listDatahindi)
+    }
+
+    useEffect(() => {
+        onCheck();
+    }, [leng])
+
 
     return (
         <>
@@ -49,13 +78,15 @@ export const Home = () => {
                             <div className="logo_box">
                                 <h1>List Box</h1>
                             </div>
-                            <div className="top_toolbar_cover hide_me">
+                            <div className="top_toolbar_cover ">
                                 <div className="leng_box">
                                     <div className="form-check form-switch">
                                         <input
                                             className="form-check-input"
                                             type="checkbox"
                                             id="flexSwitchCheckDefault"
+                                            checked={leng}
+                                            onChange={(e) => { setLeng(e.target.checked); onCheck() }}
                                         />
                                         <label
                                             className="form-check-label"
@@ -65,7 +96,7 @@ export const Home = () => {
                                         </label>
                                     </div>
                                 </div>
-                                <div className="add_more_item">
+                                <div className="add_more_item hide_me">
                                     <button type="button" className="btn btn-light">
                                         Add
                                     </button>
@@ -73,7 +104,11 @@ export const Home = () => {
                             </div>
                             <ul className="item_name_box">
                                 {
-                                    listData?.map((item, key) => {
+
+
+
+
+                                    listMap?.map((item, key) => {
 
 
                                         return (
@@ -98,7 +133,7 @@ export const Home = () => {
                                                             className="add_btn"
                                                             onClick={() => {
                                                                 const qty = qtyBox[item.name] || 1;
-                                                                setAddedList((prev) => [...prev, { name: item?.name,qty }]);
+                                                                setAddedList((prev) => [...prev, { name: item?.name, qty }]);
                                                             }}
                                                         >
                                                             Add
@@ -162,7 +197,7 @@ export const Home = () => {
                                             <>
                                                 <p key={key}>
                                                     <span>{item?.name}</span>
-                                                    <span>{item?.qty}{item?.qty <= 90  ? " Kg":" Gram" }</span>
+                                                    <span>{item?.qty}{item?.qty <= 90 ? " Kg" : " Gram"}</span>
                                                 </p>
                                             </>
                                         ))

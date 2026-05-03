@@ -15,6 +15,8 @@
 
  .list_cover ul li .qty_item {
    width: 50px;
+   background-color: #fff;
+   color: #000;
  }
 
  .list_cover ul li button {
@@ -87,7 +89,8 @@
  }
 
  .list_cover .logo_box h1 {
-   text-align: center;
+  color: #000;
+  text-align: center;
    font-size: 21px;
    font-weight: 800;
  }
