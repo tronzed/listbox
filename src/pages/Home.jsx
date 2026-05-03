@@ -83,7 +83,7 @@ export const Home = () => {
                                                     <div className="item_tool_box">
                                                         <input
 
-                                                            value={qtyBox[item.name] || "1"}
+                                                            value={qtyBox[item.name] || ""}
                                                             onChange={(e) =>
                                                                 setQtyBox({
                                                                     ...qtyBox,
@@ -162,7 +162,7 @@ export const Home = () => {
                                             <>
                                                 <p key={key}>
                                                     <span>{item?.name}</span>
-                                                    <span>{item?.qty}</span>
+                                                    <span>{item?.qty}{item?.qty <= 90  ? " Kg":" Gram" }</span>
                                                 </p>
                                             </>
                                         ))
