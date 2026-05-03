@@ -2,18 +2,7 @@ import { useRef, useState } from "react";
 import { toJpeg } from "html-to-image";
 export const Home = () => {
 
-
-
     const ref = useRef();
-
-    const download22 = async () => {
-        const dataUrl = await toJpeg(ref.current, { quality: 1 });
-
-        const link = document.createElement("a");
-        link.download = "list.jpg";
-        link.href = dataUrl;
-        link.click();
-    };
 
     const download = async () => {
         await new Promise((res) => setTimeout(res, 300)); // wait for render
@@ -28,7 +17,7 @@ export const Home = () => {
 
 
     const listData = [
-        { name: 'Namak (Salt)' },
+        { name: 'Namak (Salt)', qty: 1 },
         { name: 'Lal Mirch Powder' },
         { name: 'Haldi Powder' },
         { name: 'Jeera ' },
@@ -45,6 +34,7 @@ export const Home = () => {
         { name: 'Potato ' }
     ];
 
+    const [qtyBox, setQtyBox] = useState({});
     const [addedList, setAddedList] = useState([])
 
     return (
@@ -83,49 +73,61 @@ export const Home = () => {
                             </div>
                             <ul className="item_name_box">
                                 {
-                                    listData?.map((item, key) => (
-                                        <>
-                                            <li className={addedList?.includes(item?.name) ? 'active_item' : "none"}>
-                                                <span className="item_name">{item?.name}</span>
-                                                <div className="item_tool_box">
-                                                    <input
-                                                        className="qty_item"
-                                                        type="number"
-                                                        defaultValue={1}
-                                                        step="0.5"
-                                                    />
-                                                    <button
-                                                        className="add_btn"
-                                                        onClick={() => {
-                                                            setAddedList((prev) => [...new Set([...prev, item?.name])]);
-                                                        }}
-                                                    >
-                                                        Add
-                                                    </button>
-                                                    <button
-                                                        className="remove_btn"
-                                                        onClick={() => {
-                                                            setAddedList((prev) => prev.filter((val) => val !== item?.name));
-                                                        }}
-                                                    >
-                                                        Remove
-                                                    </button>
-                                                </div>
-                                            </li>
-                                        </>
-                                    ))
+                                    listData?.map((item, key) => {
+
+
+                                        return (
+                                            <>
+                                                <li className={addedList?.some((e) => e.name === item?.name) ? 'active_item' : "none"}>
+                                                    <span className="item_name">{item?.name}</span>
+                                                    <div className="item_tool_box">
+                                                        <input
+
+                                                            value={qtyBox[item.name] || "1"}
+                                                            onChange={(e) =>
+                                                                setQtyBox({
+                                                                    ...qtyBox,
+                                                                    [item.name]: e.target.value
+                                                                })
+                                                            }
+                                                            className="qty_item"
+                                                            type="number"
+                                                            step="0.5"
+                                                        />
+                                                        <button
+                                                            className="add_btn"
+                                                            onClick={() => {
+                                                                const qty = qtyBox[item.name] || 1;
+                                                                setAddedList((prev) => [...prev, { name: item?.name,qty }]);
+                                                            }}
+                                                        >
+                                                            Add
+                                                        </button>
+                                                        <button
+                                                            className="remove_btn"
+                                                            onClick={() => {
+                                                                setAddedList((prev) => prev.filter((val) => val.name !== item?.name));
+                                                            }}
+                                                        >
+                                                            Remove
+                                                        </button>
+                                                    </div>
+                                                </li>
+                                            </>
+                                        )
+                                    })
                                 }
                             </ul>
                         </div>
                     </div>
                 </div>
 
-                {addedList.length ? (
+                {addedList?.length ? (
 
 
                     <div className="bottom_fix_footer">
                         <div className="bottom_view_box">
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">See List</button>
+                            <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">See List</button>
                         </div>
                     </div>
 
@@ -158,9 +160,9 @@ export const Home = () => {
                                     {
                                         addedList?.map((item, key) => (
                                             <>
-                                                <p>
-                                                    <span>{item}</span>
-                                                    <span>1</span>
+                                                <p key={key}>
+                                                    <span>{item?.name}</span>
+                                                    <span>{item?.qty}</span>
                                                 </p>
                                             </>
                                         ))

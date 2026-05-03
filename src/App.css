@@ -119,3 +119,6 @@
 .inner_content p:last-child {
     border-bottom: 0;
 }
+.list_cover ul li.active_item .qty_item {
+  display: none;
+}
